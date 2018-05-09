@@ -57,5 +57,6 @@
     <!-- Include Footer -->
     @include('layouts.footer')
     
+    @yield('extraJS')
   </body>
 </html>

@@ -13,8 +13,5 @@ class ReplyController extends Controller
     	return back();
     }
 
-    public function userReply()
-    {
-    	return $this->belongsTo(User::class);
-    }
+
 }

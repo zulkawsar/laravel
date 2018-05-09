@@ -3,7 +3,7 @@
 @section('content')
 	<div class="col-sm-8 blog-main">
 		<h1> Create a Post </h1>
-		<form method="POST" action="{{ route('store') }}">
+		<form id="postSubmit" method="POST" action="{{ route('store') }}">
 			{{ csrf_field() }}
 			<div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
 				<label for="title">Title</label>
@@ -26,8 +26,32 @@
 				    </span>
 				@endif
 			</div>
-			<input type="hidden" name="user_id" value="3">
+			{{-- <input type="hidden" name="user_id" value="3"> --}}
 			<button class="btn btn-primary">Create</button>
 		</form>
 	</div>
+@endsection
+
+
+@section('extraJS')
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#postSubmit').submit(function(e){
+				e.preventDefault();
+				var Formurl = $(this).attr('action');
+				$.ajax({
+					url: Formurl,
+					type: 'post',
+					data: new FormData($("#postSubmit")[0]),
+					processData: false,
+					contentType: false,
+					dataType: 'json',
+					success: function(data){
+						var response = JSON.parse(response);
+						console.log(response.status);
+					}
+				});
+			});
+		});
+	</script>
 @endsection

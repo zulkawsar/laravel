@@ -37,4 +37,9 @@ class User extends Authenticatable
         $this->userPost()->save($post);
     }
 
+    public function userReply()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
