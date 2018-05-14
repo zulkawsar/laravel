@@ -39,6 +39,8 @@
 			$('#postSubmit').submit(function(e){
 				e.preventDefault();
 				var Formurl = $(this).attr('action');
+				// var ab = $(this).serialize();
+				// alert(ab);
 				$.ajax({
 					url: Formurl,
 					type: 'post',
@@ -48,7 +50,7 @@
 					dataType: 'json',
 					success: function(data){
 						var response = JSON.parse(response);
-						console.log(response.status);
+						console.log(data);
 					}
 				});
 			});

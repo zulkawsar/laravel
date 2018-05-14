@@ -2,16 +2,17 @@
 
 @section('content')
 	<div class="col-sm-8">
-		<div class="blog-post">
+		<div id="blog-post_{{ $post->id }}">
 		  <h4 class="blog-post-title">
 		  	{{ $post->title }}
 
 		  </h4>
 		  <p class="blog-post-meta">
 		  	{{ $post->user->name }} {{ $post->created_at->toFormattedDateString() }}
+		  	<button class="fas fa-pencil-alt" name="edit" onclick="editpost(this, {{$post->id}})" style="border: none; background: transparent;"></button>
 		  </p>
 
-		  <p class="text-justify">{{ $post->body }}</p>
+		  <p class="message-body">{{ $post->body }}</p>
 		  
 		</div><!-- /.blog-post -->
 
@@ -118,4 +119,15 @@
 		</div>
 		
 	</div>
+@endsection
+@section('extraJS')
+<script type="text/javascript">
+	function editpost(editobj,id){
+		$(editobj).prop('disable','true');
+		var currentMes = $("#blog-post_"+ id + " .message-body").html();
+		var editMarkUp = '<textarea row="2" cols="50">'+ currentMes +' </textarea> </br> <button class="btn btn-info" name="edit-save">save </button>';
+	$("#blog-post_" + id + " .message-body").html(editMarkUp);
+		
+	}
+</script>
 @endsection
