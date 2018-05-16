@@ -119,14 +119,28 @@
 		</div>
 		
 	</div>
+	@php 
+		$link = route('index');
+		$actionLink = $link.'/?';
+	@endphp
 @endsection
 @section('extraJS')
 <script type="text/javascript">
+
 	function editpost(editobj,id){
 		$(editobj).prop('disable','true');
 		var currentMes = $("#blog-post_"+ id + " .message-body").html();
-		var editMarkUp = '<textarea row="2" cols="50">'+ currentMes +' </textarea> </br> <button class="btn btn-info" name="edit-save">save </button>';
-	$("#blog-post_" + id + " .message-body").html(editMarkUp);
+
+		var editMarkUp = '<textarea row="2" cols="50" id="txtmessage_'+id+'">'+ currentMes +' </textarea> </br> <button class="btn btn-info" name="edit-save" onclick="ajaxCRUD(\'edit\','+id+')">save </button>';
+		$("#blog-post_" + id + " .message-body").html(editMarkUp);
+		
+	}
+
+	function ajaxCRUD(action,id){
+		
+		var ulrLink = '{{$actionLink}}';
+		var totalink = ulrLink + action + "=" + "&id="+id + '&body=' + $("#txtmessage_"+id).val();
+		alert(totalink);
 		
 	}
 </script>

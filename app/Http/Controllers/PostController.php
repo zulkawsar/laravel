@@ -13,6 +13,11 @@ class PostController extends Controller
 {
     public function index()
     {
+        if (request(['edit'])) {
+            $post = Post::find(request(['id']));
+            return $post;
+
+        }
     	if(request( [ 'month', 'year' ])) {
             $posts = Post::latest()->filter( request( [ 'month', 'year' ] ))->get();
         }
@@ -37,7 +42,8 @@ class PostController extends Controller
 
 
     public function store( PostRequest $request )
-    {
+    {   
+        
         auth()->user()->publish(
             new Post(request(['title','body']))
         );
