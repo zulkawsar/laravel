@@ -9,7 +9,7 @@
 		  </h4>
 		  <p class="blog-post-meta">
 		  	{{ $post->user->name }} {{ $post->created_at->toFormattedDateString() }}
-		  	<button class="fas fa-pencil-alt" name="edit" onclick="editpost(this, {{$post->id}})" style="border: none; background: transparent;"></button>
+		  	<button class="fas fa-pencil-alt" name="edit" onclick="editpost(this,{{$post->id}})" style="border: none; background: transparent;"></button>
 		  </p>
 
 		  <p class="message-body">{{ $post->body }}</p>
@@ -128,9 +128,9 @@
 <script type="text/javascript">
 
 	function editpost(editobj,id){
-		$(editobj).prop('disable','true');
-		var currentMes = $("#blog-post_"+ id + " .message-body").html();
+		$(editobj).prop('disabled','true');
 
+		var currentMes = $("#blog-post_"+ id + " .message-body").html();
 		var editMarkUp = '<textarea row="2" cols="50" id="txtmessage_'+id+'">'+ currentMes +' </textarea> </br> <button class="btn btn-info" name="edit-save" onclick="ajaxCRUD(\'edit\','+id+')">save </button>';
 		$("#blog-post_" + id + " .message-body").html(editMarkUp);
 		
@@ -141,6 +141,18 @@
 		var ulrLink = '{{$actionLink}}';
 		var totalink = ulrLink + action + "=" + "&id="+id + '&body=' + $("#txtmessage_"+id).val();
 		alert(totalink);
+		$.ajax({
+			headers: {
+			    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url: '{{route('post.update')}}',
+			type: 'POST',
+			data: totalink,
+			success: function(data){
+				console.log(data);
+				$("#blog-post_"+ id + " .message-body").html(data);
+			}
+		});
 		
 	}
 </script>

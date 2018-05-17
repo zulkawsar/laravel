@@ -52,5 +52,14 @@ class PostController extends Controller
     	]);
     }
 
+    public function update(Request $request)
+    {
+        $post = Post::where('id', $request->id)->update([
+            'body'  => $request->body,
+        ]);
+        // return $post;
+        return response()->json($request->body);
+    }
+
     
 }

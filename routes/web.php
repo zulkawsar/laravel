@@ -36,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::post('/posts/store', 'PostController@store')->name('store');
 
+	Route::post('/posts/update', 'PostController@update')->name('post.update');
+
 	// Comment
 	Route::post('/posts/comment/{post}', 'CommentController@store')->name('comment');
 
